@@ -1,0 +1,32 @@
+[project]
+name = "wavelake"
+version = "0.1.0"
+description = "Medallion (bronze/silver/gold) lakehouse for NOAA NDBC wave buoy data on Delta Lake"
+readme = "README.md"
+license = { text = "MIT" }
+authors = [{ name = "Eloy Huidobro Rodríguez" }]
+requires-python = ">=3.11"
+dependencies = ["deltalake>=0.25", "pandas>=2.2", "pyarrow>=16"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "ruff>=0.6"]
+
+[project.scripts]
+wavelake = "wavelake.cli:main"
+
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src", "tests"]
+
+[tool.ruff]
+line-length = 110
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]

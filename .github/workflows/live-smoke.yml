@@ -1,0 +1,20 @@
+name: Live smoke test
+
+# Runs the full pipeline against real NDBC data. Kept out of the main CI so that
+# an upstream outage never blocks a merge.
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 6 * * 1"
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -e .
+      - run: wavelake run 41048 44025 --years 2023
+      - run: wavelake report
